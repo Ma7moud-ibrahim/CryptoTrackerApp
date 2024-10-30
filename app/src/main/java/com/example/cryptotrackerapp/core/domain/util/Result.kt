@@ -1,12 +1,13 @@
-package com.example.cryptotrackerapp.util
+package com.example.cryptotrackerapp.core.domain.util
 
 typealias DomainError = Error
-
+//typealias DomainError = Error
 sealed interface Result<out D, out E: Error> {
     data class Success<out D>(val data: D): Result<D, Nothing>
     data class Error<out E: DomainError>(val error: E): Result<Nothing, E>
 }
 
+//typealias EmptyResult<E> = Result<Unit, E>
 inline fun <T, E: Error, R> Result<T, E>.map(map: (T) -> R): Result<R, E> {
     return when(this) {
         is Result.Error -> Result.Error(error)
@@ -14,10 +15,11 @@ inline fun <T, E: Error, R> Result<T, E>.map(map: (T) -> R): Result<R, E> {
     }
 }
 
+//typealias EmptyResult<E> = Result<Unit, E>
 fun <T, E: Error> Result<T, E>.asEmptyDataResult(): EmptyResult<E> {
     return map {  }
 }
-
+//typealias EmptyResult<E> = Result<Unit, E>
 inline fun <T, E: Error> Result<T, E>.onSuccess(action: (T) -> Unit): Result<T, E> {
     return when(this) {
         is Result.Error -> this
@@ -27,6 +29,7 @@ inline fun <T, E: Error> Result<T, E>.onSuccess(action: (T) -> Unit): Result<T, 
         }
     }
 }
+//typealias EmptyResult<E> = Result<Unit, E>
 inline fun <T, E: Error> Result<T, E>.onError(action: (E) -> Unit): Result<T, E> {
     return when(this) {
         is Result.Error -> {
@@ -37,4 +40,5 @@ inline fun <T, E: Error> Result<T, E>.onError(action: (E) -> Unit): Result<T, E>
     }
 }
 
+//typealias EmptyResult<E> = Result<Unit, E>
 typealias EmptyResult<E> = Result<Unit, E>

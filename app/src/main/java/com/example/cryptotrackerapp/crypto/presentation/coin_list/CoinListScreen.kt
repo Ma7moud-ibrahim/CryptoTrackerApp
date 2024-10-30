@@ -53,7 +53,9 @@ fun CoinListScreenPreview() {
         CoinListScreen(
             state = ColinListState(
                 coins = (1..10).map {
-                    previewCoinUi
+                    previewCoinUi.copy(
+                        id = it.toString()
+                    )
                 }
             )
         )

@@ -1,4 +1,4 @@
-package com.example.cryptotrackerapp.util
+package com.example.cryptotrackerapp.core.domain.util
 
 enum class NetworkError: Error {
     REQUEST_TIMEOUT,

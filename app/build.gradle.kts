@@ -21,12 +21,17 @@ android {
     }
 
     buildTypes {
+        debug{
+            buildConfigField("String", "BASE_URL", "https://\"api.coincap.io/v2/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "https://\"api.coincap.io/v2/\"")
+
         }
     }
     compileOptions {
@@ -37,6 +42,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -66,4 +72,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation ("io.ktor:ktor-client-core:2.3.2")            // Core Ktor client
+    implementation ("io.ktor:ktor-client-android:2.3.2")         // For Android
+    implementation ("io.ktor:ktor-client-content-negotiation:2.3.2") // For handling content negotiation
+    implementation ("io.ktor:ktor-serialization-kotlinx-json:2.3.2") // For JSON serialization
+
+    implementation ("io.ktor:ktor-client-logging:2.3.2" )           // Logging for Ktor
 }
+
