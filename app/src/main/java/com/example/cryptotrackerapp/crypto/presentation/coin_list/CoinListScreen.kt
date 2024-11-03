@@ -19,7 +19,7 @@ import com.plcoding.cryptotracker.ui.theme.CryptoTrackerTheme
 
 @Composable
 fun CoinListScreen(
-    state: ColinListState,
+    state: CoinListState,
     modifier: Modifier = Modifier
 ) {
     if (state.isLoading) {
@@ -51,7 +51,7 @@ fun CoinListScreen(
 fun CoinListScreenPreview() {
     CryptoTrackerTheme {
         CoinListScreen(
-            state = ColinListState(
+            state = CoinListState(
                 coins = (1..10).map {
                     previewCoinUi.copy(
                         id = it.toString()
