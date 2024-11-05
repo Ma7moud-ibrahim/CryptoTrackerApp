@@ -12,7 +12,9 @@ import com.example.cryptotrackerapp.crypto.domain.CoinDataSource
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 
-class RemoteCoinDataSource(private val httpClient: HttpClient) : CoinDataSource {
+class RemoteCoinDataSource(
+    private val httpClient: HttpClient
+) : CoinDataSource {
     override suspend fun getCoins(): Result<List<Coin>, NetworkError> {
         return safeCall<CoinsResponseDto> {
             httpClient.get(
