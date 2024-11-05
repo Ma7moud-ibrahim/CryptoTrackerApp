@@ -6,10 +6,12 @@ import com.example.cryptotrackerapp.core.domain.util.onError
 import com.example.cryptotrackerapp.core.domain.util.onSuccess
 import com.example.cryptotrackerapp.crypto.domain.CoinDataSource
 import com.example.cryptotrackerapp.crypto.presentation.models.toCoinUi
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,6 +28,10 @@ class CoinListViewModel(
             SharingStarted.WhileSubscribed(5000L),// Stop loading after 5 seconds
             CoinListState()
         )
+
+    private val _event = Channel<CoinListEvent> () // Channel for events
+    val event = _event.receiveAsFlow() // Receive as flow
+
     fun onAction(action : CoinListAction) {
      when (action) {
          is CoinListAction.OnCoinClick -> {
@@ -57,7 +63,7 @@ class CoinListViewModel(
                             isLoading = false,
                         )
                     }
-
+                    _event.send(CoinListEvent.Error(error))
                 }
         }
     }
